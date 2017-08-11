@@ -14,7 +14,7 @@ into terminal
 
 result:
 
-![alt text](https://github.com/k-brk/palmrejection/blob/master/img/xinputresult.png)
+![alt text](img/xinputresult.png)
 
 As you can see in the pictures above, there are few devices listed but we are only interested in those marked in ellipse.
 ```Wacom HID 104 Pen stylus/eraser``` is our wacom pen, and ```FTSC1000:00 2808:5012``` is our touchscreen. Devices names may vary depending on device, so yours devices might have more or less recognizable names. Usually wacom pen has in name wacom but touchscreen not necessarily. If you are not sure that you got proper touchscreen name type:
@@ -27,7 +27,7 @@ If you see ``` E: ID_INPUT_TOUCHSCREEN=1``` you got right device.
 Now configuration part:
 
 Open palmrejection.py in any text editor, at the beginning of script there are configuration variables.
-``` 
+```
 # Configuration
 touch_screen = r"FTSC1000:00 2808:5012"
 pen = r"Wacom"

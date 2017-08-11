@@ -33,9 +33,9 @@ touch_screen = r"FTSC1000:00 2808:5012"
 pen = r"Wacom"
 sleep_time_in_sec = 0.250
 ```
-In touch_screen variable replace ```FTSC1000:00 2808:5012```with your touchscreen name
+In touch_screen variable replace ```FTSC1000:00 2808:5012```with your touchscreen name.
 
-In pen variable replace ```Wacom``` with your wacom pen name
+In pen variable replace ```Wacom``` with your wacom pen name.
 
 If your wacom pen has eraser and you want the script to also detect the eraser, you need to find common word in those two device names which is in my case ```Wacom HID 104 Pen``` but ```Wacom``` is enough.
 

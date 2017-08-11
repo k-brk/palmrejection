@@ -1,4 +1,8 @@
-#!/usr/local/bin/python3
+#!/usr/local/bin/python
+
+from __future__ import print_function
+
+
 
 import subprocess
 import re
@@ -6,10 +10,19 @@ import time
 import sys
 import atexit
 
+import sys
+
+if sys.version_info < (3, 0):
+    try:
+        FileNotFoundError
+    except NameError:
+        FileNotFoundError = IOError
+
+
 # Configuration
 touch_screen = r"FTSC1000:00 2808:5012"
 pen = r"Wacom"
-sleep_time = 0.250 # 0.25s
+sleep_time_in_sec = 0.250
 
 def find_id(device):
     """Extracts device id(s) from xinput. Parametr device is name of device.
@@ -107,7 +120,7 @@ if __name__ == '__main__':
         try:
             if current_status == last_status:
                 last_status = current_status
-                time.sleep(sleep_time)
+                time.sleep(sleep_time_in_sec)
                 continue
             # If Pen or eraser is near disable touchscreen
             if any(current_status):
@@ -116,7 +129,7 @@ if __name__ == '__main__':
                 enable_touchscreen(devices_id[touch_screen])
 
             last_status = current_status
-            time.sleep(sleep_time)
+            time.sleep(sleep_time_in_sec)
         # Enables touchscreen at exception just in case, so we won't be left with disabled touchscreen
         except KeyboardInterrupt as e:
             print(e)

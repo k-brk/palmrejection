@@ -1,10 +1,10 @@
 # palmrejection
-Palm rejection script for linux. Script disables touchscreen when wacom pen is near screen so that palm will not interfere with our wacom pen. Script was made for Cube mix plus but it might work with other touchscreen devices as well.
+Palm rejection script made for linux to improve wacom pen experience. Script disables touchscreen when wacom pen is near screen so that palm will not interfere with our wacom pen. Script was made for Cube mix plus but it might work with other touchscreen devices as well.
 
 **Requirements**
 
 * xinput (Which is builtin in every(?) linux distribution)
-* python
+* python2.7+
 
 **How to use**
 

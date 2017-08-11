@@ -12,7 +12,7 @@ Type:
 ``` xinput -list ```
 into terminal
 
-result:
+You will see something like this
 
 ![alt text](https://github.com/k-brk/palmrejection/blob/master/img/xinputresult.png)
 

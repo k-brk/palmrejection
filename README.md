@@ -22,6 +22,7 @@ As you can see in the pictures above, there are few devices listed but we are on
 ``` udevadm info --export-db | grep -B 7 "Name" ```
 
 (Replace "Name" with your device name in quotes)
+
 If you see ``` E: ID_INPUT_TOUCHSCREEN=1``` you got right device.
 
 Now configuration part:

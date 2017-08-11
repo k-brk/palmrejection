@@ -45,6 +45,11 @@ To run type script ```python palmrejection.py```
 
 You can add this script to startup so you will not have to launch it manually every time.
 
+**Warning**
+
+If palmrejection script is force closed when wacom pen is near, there is possibility that touchscreen will be disabled. To re-enable find corresponding id to touchscreen name in ```xinput -list``` then
+type  ```xinput enable id`` where 'id' is touchscreen id.
+
 **TODO**
 
 * [ ] Autoconfiguration (via udevadm?)

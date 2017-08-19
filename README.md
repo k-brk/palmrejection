@@ -1,12 +1,22 @@
 # palmrejection
 Palm rejection script made for linux to improve wacom pen experience. Script disables touchscreen when wacom pen is near screen so that palm will not interfere with our wacom pen. Script was made for Cube mix plus but it might work with other touchscreen devices as well.
 
-**Requirements**
+### **Requirements**
 
 * xinput (Which is builtin in every(?) linux distribution)
 * python2.7+
 
-**How to use**
+### **Configuration**
+
+**Auto**
+
+Run it with ```--auto``` argument for automatic configuration:
+
+```python palmrejection.py --auto```
+
+If it does not work, move to manual configuration
+
+**Manual**
 
 Type:
 ``` xinput -list ```
@@ -30,8 +40,8 @@ Now configuration part:
 Open palmrejection.py in any text editor, at the beginning of script there are configuration variables.
 ```
 # Configuration
-touch_screen = r"FTSC1000:00 2808:5012"
-pen = r"Wacom"
+touch_screen = "FTSC1000:00 2808:5012"
+pen = "Wacom"
 sleep_time_in_sec = 0.250
 ```
 In touch_screen variable replace ```FTSC1000:00 2808:5012```with your touchscreen name.
@@ -46,17 +56,17 @@ To run type script ```python palmrejection.py```
 
 You can add this script to startup so you will not have to launch it manually every time.
 
-**Warning**
+### **Warning**
 
 If palmrejection script is force closed when wacom pen is near, there is possibility that touchscreen will be disabled. To re-enable find corresponding id to touchscreen name in ```xinput -list``` then
 type  ```xinput enable id``` where 'id' is touchscreen id.
 
-**TODO**
+### **TODO**
 
-* [ ] Autoconfiguration (via udevadm?)
+* [x] Autoconfiguration (via udevadm?)
 
 * [ ] Improve common name hack when pen has also eraser
 
-**License**
+### **License**
 
 MIT License

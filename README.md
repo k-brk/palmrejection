@@ -38,19 +38,28 @@ If you see ``` E: ID_INPUT_TOUCHSCREEN=1``` you got right device.
 Now configuration part:
 
 Open palmrejection.py in any text editor, at the beginning of script there are configuration variables.
+
 ```
 # Configuration
-touch_screen = "FTSC1000:00 2808:5012"
-pen = "Wacom"
+touch_screen = ""
+pen = ""
 sleep_time_in_sec = 0.250
 ```
-In touch_screen variable replace ```FTSC1000:00 2808:5012```with your touchscreen name.
 
-In pen variable replace ```Wacom``` with your wacom pen name.
+In touch_screen variable put your touchscreen device name which you got from ```xinput --list``` in quotes.
+
+In pen variable put your wacom pen name which you got from ```xinput --list``` in quotes.
 
 If your wacom pen has eraser and you want the script to also detect the eraser, you need to find common word in those two device names which is in my case ```Wacom HID 104 Pen``` but ```Wacom``` is enough.
 
 ```sleep_time_in_sec``` is sleep time between checks. The greater value reduces the check frequency. Try and choose experimentally the best value for you.
+
+Configuration example
+```
+# Configuration
+touch_screen = "FTSC1000:00 2808:5012"
+pen = "Wacom"
+sleep_time_in_sec = 0.250```
 
 To run type script ```python palmrejection.py```
 

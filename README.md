@@ -59,7 +59,8 @@ Configuration example
 # Configuration
 touch_screen = "FTSC1000:00 2808:5012"
 pen = "Wacom"
-sleep_time_in_sec = 0.250```
+sleep_time_in_sec = 0.250
+```
 
 To run type script ```python palmrejection.py```
 

@@ -20,9 +20,73 @@ if sys.version_info < (3, 0):
 
 
 # Configuration
-touch_screen = r"FTSC1000:00 2808:5012"
-pen = r"Wacom"
+touch_screen = ""
+pen = ""
 sleep_time_in_sec = 0.250
+
+
+def find_device_name(udev_result, udev_device_flag):
+    device_information = []
+
+    found_i2c_device = False
+    found_device_flag = False
+    found_device_name = False
+
+    device_name = ""
+
+    for line in udev_result:
+
+        # Found new device, process current device before adding a new one
+        if line.startswith('P: ') and found_i2c_device:
+            if found_device_flag:
+                for line in device_information:
+                    if "E: NAME=" in line:
+                        found_device_name = True
+                        device_name = line
+                        break
+            device_information.clear()
+            found_i2c_device = False
+            found_device_flag = False
+
+        # Each device information starts with P in front in first line, touchscreen or wacom most likely will be connected via i2c
+        if line.startswith('P: ') and "i2c" in line and not found_i2c_device:
+            found_i2c_device = True
+            device_information.append(line)
+            continue
+
+        if found_i2c_device:
+            device_information.append(line)
+            if udev_device_flag in line:
+                found_device_flag = True
+
+    if not found_device_name:
+        print("Couldn't find device, please configure manually.")
+        return None
+
+    device_name = device_name.split(sep='=')[1]
+    device_name = device_name.replace('"', '')
+    return device_name
+
+def auto_configure():
+    udevadm_process = subprocess.Popen(['udevadm', 'info', '--export-db'], stdout=subprocess.PIPE)
+    result = udevadm_process.communicate()[0].decode('UTF-8').splitlines()
+
+    udev_touchscreen_flag = "ID_INPUT_TOUCHSCREEN=1"
+    udev_wacom_flag = "ID_INPUT_TABLET=1"
+
+
+    global touch_screen
+    touch_screen = find_device_name(result, udev_touchscreen_flag)
+    global pen
+    pen = find_device_name(result, udev_wacom_flag)
+
+    print("Autoconfiguration result: ")
+    print("Touchscreen: ", touch_screen)
+    print("Wacom pen: ", pen)
+
+    if touch_screen != None and pen != None:
+        return True
+    return False
 
 def find_id(device):
     """Extracts device id(s) from xinput. Parametr device is name of device.
@@ -35,7 +99,7 @@ def find_id(device):
         p.stdout.close()
         result = p2.communicate()[0].decode('UTF-8')
         if not result:
-            raise ValueError("[E1]: Can't find such device: {}. Recheck configuration.".format(touch_screen))
+            raise ValueError("[E1]: Couldn't find such device: {}. Recheck configuration.".format(touch_screen))
 
     except subprocess.CalledProcessError as e:
         print(e)
@@ -113,6 +177,15 @@ def enable_touchscreen(touch_screen_id):
 
 
 if __name__ == '__main__':
+
+    if len(sys.argv) == 1:
+        print("For auto configuration type: python ", sys.argv[0], "--auto")
+        if not touch_screen and not pen:
+            print("Empty configuration, autoconfiguration attempt.")
+            auto_configure()
+    elif len(sys.argv) == 2 and sys.argv[1]  == "--auto":
+        auto_configure()
+
     devices_id = {touch_screen: find_id(touch_screen), pen: find_id(pen)}
     last_status = [False, False]
     while True:
